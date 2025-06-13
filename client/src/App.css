@@ -1,0 +1,64 @@
+body {
+  background-color: #f0f4f8;
+  font-family: 'Arial', sans-serif;
+}
+
+.card {
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.btn-primary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-primary:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+.btn-outline-warning {
+  color: #ffc107;
+  border-color: #ffc107;
+}
+
+.btn-outline-warning:hover {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.text-primary {
+  color: #28a745 !important; /* Verde naturale */
+}
+
+.text-success {
+  color: #ffd700 !important; /* Oro per i prezzi */
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+footer {
+  border-top: 1px solid #dee2e6;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #ffeb3b !important; /* Giallo luminoso */
+}
