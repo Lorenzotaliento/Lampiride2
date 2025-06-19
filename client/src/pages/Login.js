@@ -3,6 +3,8 @@ import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
+import '../styles/Login.css'; // File CSS personalizzato
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -19,36 +21,47 @@ const Login = () => {
       login(res.data.token);
       navigate('/');
     } catch (err) {
-      setError('Login failed. Check your credentials.');
+      setError('Accesso fallito. Controlla le tue credenziali.');
       console.log(err);
     }
   };
 
   return (
-    <div className="text-center mt-5">
-      <h2 style={{ color: '#fff' }}>Login</h2>
-      <Form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: '0 auto' }}>
-        <Form.Group className="mb-3">
-          <Form.Control
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ background: '#444', color: '#fff', border: 'none' }}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ background: '#444', color: '#fff', border: 'none' }}
-          />
-        </Form.Group>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <Button variant="outline-light" type="submit">Login</Button>
-      </Form>
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Accedi al tuo Account</h2>
+        <Form onSubmit={handleSubmit} className="login-form">
+          <Form.Group className="mb-4 position-relative">
+            <FaEnvelope className="input-icon" />
+            <Form.Control
+              type="email"
+              placeholder="Inserisci la tua email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="custom-input"
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-4 position-relative">
+            <FaLock className="input-icon" />
+            <Form.Control
+              type="password"
+              placeholder="Inserisci la password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="custom-input"
+              required
+            />
+          </Form.Group>
+          {error && <p className="error-message">{error}</p>}
+          <Button className="login-button" type="submit">
+            Accedi
+          </Button>
+        </Form>
+        <p className="register-link">
+          Non hai un account? <a href="/register">Registrati</a>
+        </p>
+      </div>
     </div>
   );
 };

@@ -2,16 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { Card, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import '../styles/Home.css'; // File CSS personalizzato
 
 const Home = () => {
   const [lamps, setLamps] = useState([]);
   const { addToCart } = useAuth();
+  const [showNotification, setShowNotification] = useState(false);
+  const [addedLamp, setAddedLamp] = useState(null);
 
   useEffect(() => {
     axios.get('http://localhost:5001/api/lamps')
       .then(res => setLamps(res.data))
       .catch(err => console.error('Error fetching lamps:', err));
   }, []);
+
+  const handleAddToCart = (lampId) => {
+    addToCart(lampId); // Chiama la funzione di aggiunta al carrello dal contesto
+    const lamp = lamps.find(l => l._id === lampId);
+    setAddedLamp(lamp);
+    setShowNotification(true);
+
+    // Nascondi la notifica dopo 3 secondi
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
+  };
 
   return (
     <div className="py-4">
@@ -26,7 +41,7 @@ const Home = () => {
                 <Card.Title className="text-dark">{lamp.name}</Card.Title>
                 <Card.Text className="text-secondary flex-grow-1">{lamp.description}</Card.Text>
                 <Card.Text className="text-success fw-bold">Price: ${lamp.price.toFixed(2)}</Card.Text>
-                <Button variant="primary" onClick={() => addToCart(lamp._id)} className="mt-auto">
+                <Button variant="primary" onClick={() => handleAddToCart(lamp._id)} className="mt-auto">
                   Add to Cart
                 </Button>
               </Card.Body>
@@ -34,6 +49,11 @@ const Home = () => {
           </Col>
         ))}
       </Row>
+      {showNotification && addedLamp && (
+        <div className="cart-notification">
+          {`Prodotto "${addedLamp.name}" aggiunto al carrello! 🎉`}
+        </div>
+      )}
     </div>
   );
 };
